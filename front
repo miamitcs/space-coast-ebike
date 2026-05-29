@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Space Coast E-Bike</title>
+</head>
+<body style="font-family:sans-serif;text-align:center">
+
+<h1>🚲 Space Coast E-Bike</h1>
+
+<input type="date" id="date"><br><br>
+<input type="text" id="phone" placeholder="Phone"><br><br>
+
+<button onclick="book()">Book Now</button>
+
+<p id="price"></p>
+
+<script>
+async function book() {
+  const date = document.getElementById("date").value;
+  const phone = document.getElementById("phone").value;
+
+  const res = await fetch("/create-payment", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({date, phone})
+  });
+
+  const data = await res.json();
+  document.getElementById("price").innerText = "Price: $" + data.price;
+}
+</script>
+
+</body>
+</html>
